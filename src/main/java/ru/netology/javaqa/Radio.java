@@ -3,6 +3,24 @@ package ru.netology.javaqa;
 public class Radio {
     private int currentNumber;
     private int currentVolume;
+    private int quantityOfStations = 10;
+
+
+    public Radio(int quantityOfStations) {
+        if (quantityOfStations <= 0) {
+            this.quantityOfStations = getQuantityOfStations();
+        } else {
+            this.quantityOfStations = quantityOfStations;
+        }
+    }
+
+    public Radio() {
+        this.quantityOfStations = getQuantityOfStations();
+    }
+
+    public int getQuantityOfStations() {
+        return quantityOfStations;
+    }
 
     public int getCurrentNumber() {
         return currentNumber;
@@ -16,7 +34,7 @@ public class Radio {
         if (newCurrentNumber < 0) {
             return;
         }
-        if (newCurrentNumber > 9) {
+        if (newCurrentNumber > quantityOfStations - 1) {
             return;
         }
         currentNumber = newCurrentNumber;
@@ -33,7 +51,7 @@ public class Radio {
     }
 
     public void nextNumber() {
-        if (currentNumber == 9) {
+        if (currentNumber == quantityOfStations - 1) {
             currentNumber = 0;
         } else {
             currentNumber = currentNumber + 1;
@@ -42,7 +60,7 @@ public class Radio {
 
     public void prevNumber() {
         if (currentNumber == 0) {
-            currentNumber = 9;
+            currentNumber = quantityOfStations - 1;
         } else {
             currentNumber = currentNumber - 1;
         }
