@@ -3,6 +3,47 @@ import org.junit.jupiter.api.Test;
 import ru.netology.javaqa.Radio;
 
 public class RadioTest {
+    // Тест конструктора Radio
+    @Test
+    public void RadioConstructorQuantityAboveZero() {
+        Radio radio = new Radio(20);
+
+        int expected = 20;
+        int actual = radio.getQuantityOfStations();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void RadioConstructorQuantityIsZero() {
+        Radio radio = new Radio(0);
+
+        int expected = 10;
+        int actual = radio.getQuantityOfStations();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void RadioConstructorQuantityLessThanZero() {
+        Radio radio = new Radio(-10);
+
+        int expected = 10;
+        int actual = radio.getQuantityOfStations();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void RadioConstructorWithDefaultQuantity() {
+        Radio radio = new Radio();
+
+        int expected = 10;
+        int actual = radio.getQuantityOfStations();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
     // Тесты setCurrentNumber
     @Test
     public void shouldSetNewNumber() {
@@ -29,9 +70,21 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSetNumbNine() {
+    public void shouldSetNumbMaxDefault() {
         Radio newNumber = new Radio();
         int numb = 9;
+        newNumber.setCurrentNumber(numb);
+
+//      expected = numb
+        int actual = newNumber.getCurrentNumber();
+
+        Assertions.assertEquals(numb, actual);
+    }
+
+    @Test
+    public void shouldSetNumbMax() {
+        Radio newNumber = new Radio(20);
+        int numb = 19;
         newNumber.setCurrentNumber(numb);
 
 //      expected = numb
@@ -53,9 +106,21 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNotSetNumberAboveNine() {
+    public void shouldNotSetNumberAboveMaxDefault() {
         Radio newNumber = new Radio();
         int numb = 10;
+        newNumber.setCurrentNumber(numb);
+
+        int expected = 0;
+        int actual = newNumber.getCurrentNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotSetNumberAboveMax() {
+        Radio newNumber = new Radio(20);
+        int numb = 20;
         newNumber.setCurrentNumber(numb);
 
         int expected = 0;
@@ -128,9 +193,23 @@ public class RadioTest {
 
     // Тесты nextNumber
     @Test
-    public void shouldChangeNineToZero() {
+    public void shouldChangeMaxDefaultToZero() {
         Radio nextNumber = new Radio();
         int numb = 9;
+        nextNumber.setCurrentNumber(numb);
+
+        nextNumber.nextNumber();
+
+        int expected = 0;
+        int actual = nextNumber.getCurrentNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldChangeMaxToZero() {
+        Radio nextNumber = new Radio(20);
+        int numb = 19;
         nextNumber.setCurrentNumber(numb);
 
         nextNumber.nextNumber();
@@ -155,9 +234,23 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    public void shouldIgnoreNextNumberIfQuantityIsOne() {
+        Radio nextNumber = new Radio(1);
+        int numb = 0;
+        nextNumber.setCurrentNumber(numb);
+
+        nextNumber.nextNumber();
+
+        int expected = 0;
+        int actual = nextNumber.getCurrentNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
     // Тесты prevNumber
     @Test
-    public void shouldChangeZeroToNine() {
+    public void shouldChangeZeroToMaxDefault() {
         Radio prevNumber = new Radio();
         int numb = 0;
         prevNumber.setCurrentNumber(numb);
@@ -165,6 +258,20 @@ public class RadioTest {
         prevNumber.prevNumber();
 
         int expected = 9;
+        int actual = prevNumber.getCurrentNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldChangeZeroToMax() {
+        Radio prevNumber = new Radio(20);
+        int numb = 0;
+        prevNumber.setCurrentNumber(numb);
+
+        prevNumber.prevNumber();
+
+        int expected = 19;
         int actual = prevNumber.getCurrentNumber();
 
         Assertions.assertEquals(expected, actual);
@@ -180,6 +287,20 @@ public class RadioTest {
 
         int expected = numb - 1;
         int actual = prevNumber.getCurrentNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldIgnorePrevNumberIfQuantityIsOne() {
+        Radio nextNumber = new Radio(1);
+        int numb = 0;
+        nextNumber.setCurrentNumber(numb);
+
+        nextNumber.nextNumber();
+
+        int expected = 0;
+        int actual = nextNumber.getCurrentNumber();
 
         Assertions.assertEquals(expected, actual);
     }
